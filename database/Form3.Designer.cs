@@ -56,7 +56,7 @@ namespace database
             // 
             // button2
             // 
-            this.button2.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.button2.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.Location = new System.Drawing.Point(324, 153);
             this.button2.Name = "button2";
@@ -68,40 +68,44 @@ namespace database
             // 
             // button3
             // 
+            this.button3.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.button3.Location = new System.Drawing.Point(576, 153);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(179, 63);
             this.button3.TabIndex = 2;
             this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
+            this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
+            this.button4.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.button4.Location = new System.Drawing.Point(63, 325);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(179, 63);
             this.button4.TabIndex = 3;
             this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
+            this.button4.UseVisualStyleBackColor = false;
             // 
             // button5
             // 
+            this.button5.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.button5.Location = new System.Drawing.Point(324, 325);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(179, 63);
             this.button5.TabIndex = 4;
             this.button5.Text = "button5";
-            this.button5.UseVisualStyleBackColor = true;
+            this.button5.UseVisualStyleBackColor = false;
             // 
             // button6
             // 
+            this.button6.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.button6.Location = new System.Drawing.Point(576, 325);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(179, 63);
             this.button6.TabIndex = 5;
             this.button6.Text = "button6";
-            this.button6.UseVisualStyleBackColor = true;
+            this.button6.UseVisualStyleBackColor = false;
             // 
             // contextMenuStrip1
             // 

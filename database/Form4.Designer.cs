@@ -29,6 +29,7 @@ namespace database
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Hanghoa_frm4));
             this.panel1 = new System.Windows.Forms.Panel();
             this.txt_hang = new System.Windows.Forms.TextBox();
             this.txt_id = new System.Windows.Forms.TextBox();
@@ -63,7 +64,7 @@ namespace database
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.panel1.Controls.Add(this.txt_hang);
             this.panel1.Controls.Add(this.txt_id);
             this.panel1.Controls.Add(this.label1);
@@ -73,7 +74,6 @@ namespace database
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(272, 175);
             this.panel1.TabIndex = 0;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // txt_hang
             // 
@@ -102,7 +102,6 @@ namespace database
             this.label1.Size = new System.Drawing.Size(26, 20);
             this.label1.TabIndex = 0;
             this.label1.Text = "ID";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label4
             // 
@@ -123,7 +122,6 @@ namespace database
             this.label2.Size = new System.Drawing.Size(57, 20);
             this.label2.TabIndex = 2;
             this.label2.Text = "Tên sp";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // dataGridView1
             // 
@@ -133,7 +131,6 @@ namespace database
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(852, 216);
             this.dataGridView1.TabIndex = 1;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // panel2
             // 
@@ -141,16 +138,16 @@ namespace database
             this.panel2.Controls.Add(this.label7);
             this.panel2.Location = new System.Drawing.Point(12, 12);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(852, 71);
+            this.panel2.Size = new System.Drawing.Size(849, 71);
             this.panel2.TabIndex = 2;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Font = new System.Drawing.Font("Consolas", 24F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.Location = new System.Drawing.Point(356, 23);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(115, 25);
+            this.label7.Size = new System.Drawing.Size(197, 37);
             this.label7.TabIndex = 0;
             this.label7.Text = "Quản lý xe";
             // 
@@ -172,53 +169,67 @@ namespace database
             // 
             this.bt_thoat.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.bt_thoat.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bt_thoat.Location = new System.Drawing.Point(686, 21);
+            this.bt_thoat.Image = ((System.Drawing.Image)(resources.GetObject("bt_thoat.Image")));
+            this.bt_thoat.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bt_thoat.Location = new System.Drawing.Point(686, 20);
             this.bt_thoat.Name = "bt_thoat";
-            this.bt_thoat.Size = new System.Drawing.Size(95, 44);
+            this.bt_thoat.Size = new System.Drawing.Size(146, 50);
             this.bt_thoat.TabIndex = 4;
             this.bt_thoat.Text = "Thoát";
             this.bt_thoat.UseVisualStyleBackColor = false;
+            this.bt_thoat.Click += new System.EventHandler(this.bt_thoat_Click);
             // 
             // bt_tim
             // 
             this.bt_tim.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.bt_tim.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bt_tim.Location = new System.Drawing.Point(515, 21);
+            this.bt_tim.Image = ((System.Drawing.Image)(resources.GetObject("bt_tim.Image")));
+            this.bt_tim.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bt_tim.Location = new System.Drawing.Point(524, 20);
             this.bt_tim.Name = "bt_tim";
-            this.bt_tim.Size = new System.Drawing.Size(95, 44);
+            this.bt_tim.Size = new System.Drawing.Size(146, 50);
             this.bt_tim.TabIndex = 3;
             this.bt_tim.Text = "Tìm";
             this.bt_tim.UseVisualStyleBackColor = false;
+            this.bt_tim.Click += new System.EventHandler(this.bt_tim_Click);
             // 
             // bt_xoa
             // 
             this.bt_xoa.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.bt_xoa.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bt_xoa.Location = new System.Drawing.Point(361, 21);
+            this.bt_xoa.Image = ((System.Drawing.Image)(resources.GetObject("bt_xoa.Image")));
+            this.bt_xoa.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bt_xoa.Location = new System.Drawing.Point(361, 20);
             this.bt_xoa.Name = "bt_xoa";
-            this.bt_xoa.Size = new System.Drawing.Size(95, 44);
+            this.bt_xoa.Size = new System.Drawing.Size(146, 50);
             this.bt_xoa.TabIndex = 2;
             this.bt_xoa.Text = "Xóa";
             this.bt_xoa.UseVisualStyleBackColor = false;
+            this.bt_xoa.Click += new System.EventHandler(this.bt_xoa_Click);
             // 
             // bt_sua
             // 
             this.bt_sua.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.bt_sua.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bt_sua.Location = new System.Drawing.Point(189, 21);
+            this.bt_sua.Image = ((System.Drawing.Image)(resources.GetObject("bt_sua.Image")));
+            this.bt_sua.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bt_sua.Location = new System.Drawing.Point(195, 20);
             this.bt_sua.Name = "bt_sua";
-            this.bt_sua.Size = new System.Drawing.Size(95, 44);
+            this.bt_sua.Size = new System.Drawing.Size(146, 50);
             this.bt_sua.TabIndex = 1;
             this.bt_sua.Text = "Sửa";
             this.bt_sua.UseVisualStyleBackColor = false;
+            this.bt_sua.Click += new System.EventHandler(this.bt_sua_Click);
             // 
             // bt_them
             // 
             this.bt_them.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.bt_them.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bt_them.Location = new System.Drawing.Point(30, 21);
+            this.bt_them.Image = ((System.Drawing.Image)(resources.GetObject("bt_them.Image")));
+            this.bt_them.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.bt_them.Location = new System.Drawing.Point(28, 20);
             this.bt_them.Name = "bt_them";
-            this.bt_them.Size = new System.Drawing.Size(95, 44);
+            this.bt_them.Size = new System.Drawing.Size(146, 50);
             this.bt_them.TabIndex = 0;
             this.bt_them.Text = "Thêm";
             this.bt_them.UseVisualStyleBackColor = false;
@@ -226,7 +237,7 @@ namespace database
             // 
             // panel4
             // 
-            this.panel4.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.panel4.Controls.Add(this.txt_sl);
             this.panel4.Controls.Add(this.label2);
             this.panel4.Controls.Add(this.label3);
@@ -236,7 +247,6 @@ namespace database
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(283, 175);
             this.panel4.TabIndex = 5;
-            this.panel4.Paint += new System.Windows.Forms.PaintEventHandler(this.panel4_Paint);
             // 
             // txt_sl
             // 
@@ -268,7 +278,7 @@ namespace database
             // 
             // panel5
             // 
-            this.panel5.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.panel5.Controls.Add(this.txt_mt);
             this.panel5.Controls.Add(this.label5);
             this.panel5.Controls.Add(this.txt_bh);
@@ -316,7 +326,6 @@ namespace database
             this.label6.Size = new System.Drawing.Size(78, 20);
             this.label6.TabIndex = 0;
             this.label6.Text = "Bảo hành";
-            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // Hanghoa_frm4
             // 

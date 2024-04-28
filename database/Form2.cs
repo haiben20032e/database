@@ -57,137 +57,60 @@ namespace database
 
         }
 
-        private void bt_them_Click_1(object sender, EventArgs e)
-        {
-            string idkhachhang = txt_id.Text.Trim();
-            string hoten = txt_ten.Text.Trim();
-            string ngaysinh = txt_ngaysinh.Text.Trim();
-            string phone = txt_sdt.Text.Trim();
-            string diachi = txt_diachi.Text.Trim();
-            int gioitinh = 0;
-
-            if (nam.Checked == true)
-            {
-                gioitinh = 1;
-
-            }
-            else if (nu.Checked == true)
-            {
-                gioitinh = 0;
-            }
-            // kieermtra xem số nhập vào phải số nguyên không
-
-            int id;
-            if (!int.TryParse(idkhachhang, out id))
-            {
-                MessageBox.Show("ID khách hàng phải là số nguyên.");
-                return;
-            }
-
-            int sdt;
-            if (!int.TryParse(phone, out sdt))
-            {
-                MessageBox.Show("Số điện thoại phải là số nguyên.");
-                return;
-            }
-
-            // Kiểm tra kết nối và mở trạng thái của kết nối
-            if (sqlcon == null)
-            {
-                // Khởi tạo kết nối
-                connectionString = ConfigurationManager.ConnectionStrings["MyDBConnectionString"].ConnectionString;
-                sqlcon = new SqlConnection(connectionString);
-            }
-
-            // Kiểm tra trạng thái kết nối, mở nếu cần
-            if (sqlcon.State != ConnectionState.Open)
-            {
-                sqlcon.Open();
-            }
-
-            // Kiểm tra ID khách hàng trùng lặp
-            string checkQuery = "SELECT COUNT(*) FROM khachhang1 WHERE id = @idkhachhang";
-            SqlCommand checkCommand = new SqlCommand(checkQuery, sqlcon);
-            checkCommand.Parameters.AddWithValue("@idkhachhang", idkhachhang);
-            int existingCount = (int)checkCommand.ExecuteScalar();
-
-            if (existingCount > 0)
-            {
-                MessageBox.Show("ID khách hàng đã tồn tại trong cơ sở dữ liệu.");
-                return; // Không thực hiện thêm vào cơ sở dữ liệu nếu ID đã tồn tại
-            }
-
-            // Thêm mới khách hàng vào cơ sở dữ liệu
-            string insertQuery = "INSERT INTO khachhang1 (id,tenkh,ngaysinh,sdt, diachi, gioitinh) " +
-                                 "VALUES (@idkhachhang, @hoten, @ngaysinh, @phone, @diachi, @gioitinh)";
-            SqlCommand insertCommand = new SqlCommand(insertQuery, sqlcon);
-            insertCommand.Parameters.AddWithValue("@idkhachhang", idkhachhang);
-            insertCommand.Parameters.AddWithValue("@hoten", hoten);
-            insertCommand.Parameters.AddWithValue("@ngaysinh", ngaysinh);
-            insertCommand.Parameters.AddWithValue("@phone", phone);
-            insertCommand.Parameters.AddWithValue("@diachi", diachi);
-            insertCommand.Parameters.AddWithValue("@gioitinh", gioitinh);
-
-            int rowsAffected = insertCommand.ExecuteNonQuery();
-
-            if (rowsAffected > 0)
-            {
-                MessageBox.Show("Thêm khách hàng thành công.");
-                // Xóa dữ liệu đã nhập từ các ô giao diện
-                txt_id.Text = "";
-                txt_ten.Text = "";
-                txt_ngaysinh.Text = "";
-                txt_sdt.Text = "";
-                txt_diachi.Text = "";
-                nam.Checked = false;
-                nu.Checked = false;
-                // Cập nhật lại DataGridView sau khi thêm thành công
-                string refreshQuery = "SELECT * FROM khachhang1";
-                SqlCommand refreshCommand = new SqlCommand(refreshQuery, sqlcon);
-                SqlDataAdapter adapter = new SqlDataAdapter(refreshCommand);
-                DataTable dataTable = new DataTable();
-                adapter.Fill(dataTable);
-                dataGridView1.DataSource = dataTable;
-            }
-            else
-            {
-                MessageBox.Show("Thêm khách hàng thất bại.");
-            }
-        }
+        
 
         private void bt_xoa_Click_1(object sender, EventArgs e)
         {
-            // Kiểm tra xem đã chọn một hàng trong DataGridView chưa
-            if (dataGridView1.SelectedRows.Count == 0)
+            // Kiểm tra xem có hàng nào được chọn trong DataGridView không
+            if (dataGridView1.SelectedRows.Count > 0)
             {
-                MessageBox.Show("Vui lòng chọn một khách hàng để xóa.");
-                return;
-            }
+                // Lấy ID khách hàng từ hàng được chọn
+                string idkhachhang = dataGridView1.SelectedRows[0].Cells["id"].Value.ToString();
 
-            // Lấy ID khách hàng cần xóa từ hàng được chọn trong DataGridView
-            string idkhachhang = dataGridView1.SelectedRows[0].Cells["id"].Value.ToString();
+                // Hiển thị MessageBox xác nhận xóa
+                DialogResult result = MessageBox.Show($"Bạn có chắc chắn muốn xóa khách hàng có ID {idkhachhang}?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            // Xóa khách hàng từ cơ sở dữ liệu
-            string deleteQuery = "DELETE FROM khachhang1 WHERE id = @idkhachhang";
-            SqlCommand deleteCommand = new SqlCommand(deleteQuery, sqlcon);
-            deleteCommand.Parameters.AddWithValue("@idkhachhang", idkhachhang);
+                if (result == DialogResult.Yes)
+                {
+                    // Kết nối cơ sở dữ liệu
+                    if (sqlcon == null)
+                    {
+                        connectionString = ConfigurationManager.ConnectionStrings["MyDBConnectionString"].ConnectionString;
+                        sqlcon = new SqlConnection(connectionString);
+                    }
 
-            int rowsAffected = deleteCommand.ExecuteNonQuery();
+                    if (sqlcon.State != ConnectionState.Open)
+                    {
+                        sqlcon.Open();
+                    }
 
-            if (rowsAffected > 0)
-            {
-                MessageBox.Show("Xóa khách hàng thành công.");
-                // Cập nhật lại DataGridView sau khi xóa thành công
-                string refreshQuery = "SELECT * FROM khachhang1";
-                SqlCommand refreshCommand = new SqlCommand(refreshQuery, sqlcon);
-                SqlDataAdapter adapter = new SqlDataAdapter(refreshCommand);
-                DataTable dataTable = new DataTable();
-                adapter.Fill(dataTable);
-                dataGridView1.DataSource = dataTable;
+                    // Tạo câu lệnh SQL để xóa khách hàng
+                    string deleteQuery = "DELETE FROM khachhang1 WHERE id = @idkhachhang";
+                    SqlCommand deleteCommand = new SqlCommand(deleteQuery, sqlcon);
+                    deleteCommand.Parameters.AddWithValue("@idkhachhang", idkhachhang);
+
+                    int rowsAffected = deleteCommand.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show($"Đã xóa khách hàng có ID {idkhachhang} thành công.");
+                        // Refresh DataGridView sau khi xóa
+                        string refreshQuery = "SELECT * FROM khachhang1";
+                        SqlCommand refreshCommand = new SqlCommand(refreshQuery, sqlcon);
+                        SqlDataAdapter adapter = new SqlDataAdapter(refreshCommand);
+                        DataTable dataTable = new DataTable();
+                        adapter.Fill(dataTable);
+                        dataGridView1.DataSource = dataTable;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Xóa khách hàng thất bại.");
+                    }
+                }
             }
             else
             {
-                MessageBox.Show("Xóa khách hàng thất bại.");
+                MessageBox.Show("Vui lòng chọn một khách hàng trong bảng để xóa");
             }
         }
         private void bt_update_Click_1(object sender, EventArgs e)
@@ -313,5 +236,107 @@ namespace database
             }
         }
 
+        private void bt_them_Click(object sender, EventArgs e)
+        {
+            string idkhachhang = txt_id.Text.Trim();
+            string hoten = txt_ten.Text.Trim();
+            string ngaysinh = txt_ngaysinh.Text.Trim();
+            string phone = txt_sdt.Text.Trim();
+            string diachi = txt_diachi.Text.Trim();
+
+            // kieermtra xem số nhập vào phải số nguyên không
+
+            int id;
+            if (!int.TryParse(idkhachhang, out id))
+            {
+                MessageBox.Show("ID khách hàng phải là số nguyên.");
+                return;
+            }
+
+            int sdt;
+            if (!int.TryParse(phone, out sdt))
+            {
+                MessageBox.Show("Số điện thoại phải là số nguyên.");
+                return;
+            }
+            string gioitinh = "";
+
+            if (nam.Checked == true)
+            {
+                gioitinh = "nam";
+
+            }
+            else if (nu.Checked == true)
+            {
+                gioitinh = "nữ";
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn giới tính của khách hàng.");
+                return;
+            }
+            // Kiểm tra kết nối và mở trạng thái của kết nối
+            if (sqlcon == null)
+            {
+                // Khởi tạo kết nối
+                connectionString = ConfigurationManager.ConnectionStrings["MyDBConnectionString"].ConnectionString;
+                sqlcon = new SqlConnection(connectionString);
+            }
+
+            // Kiểm tra trạng thái kết nối, mở nếu cần
+            if (sqlcon.State != ConnectionState.Open)
+            {
+                sqlcon.Open();
+            }
+
+            // Kiểm tra ID khách hàng trùng lặp
+            string checkQuery = "SELECT COUNT(*) FROM khachhang1 WHERE id = @idkhachhang";
+            SqlCommand checkCommand = new SqlCommand(checkQuery, sqlcon);
+            checkCommand.Parameters.AddWithValue("@idkhachhang", idkhachhang);
+            int existingCount = (int)checkCommand.ExecuteScalar();
+
+            if (existingCount > 0)
+            {
+                MessageBox.Show("ID khách hàng đã tồn tại trong cơ sở dữ liệu.");
+                return; // Không thực hiện thêm vào cơ sở dữ liệu nếu ID đã tồn tại
+            }
+
+            // Thêm mới khách hàng vào cơ sở dữ liệu
+            string insertQuery = "INSERT INTO khachhang1 (id,tenkh,ngaysinh,sdt, diachi, gioitinh) " +
+                                 "VALUES (@idkhachhang, @hoten, @ngaysinh, @phone, @diachi, @gioitinh)";
+            SqlCommand insertCommand = new SqlCommand(insertQuery, sqlcon);
+            insertCommand.Parameters.AddWithValue("@idkhachhang", idkhachhang);
+            insertCommand.Parameters.AddWithValue("@hoten", hoten);
+            insertCommand.Parameters.AddWithValue("@ngaysinh", ngaysinh);
+            insertCommand.Parameters.AddWithValue("@phone", phone);
+            insertCommand.Parameters.AddWithValue("@diachi", diachi);
+            insertCommand.Parameters.AddWithValue("@gioitinh", gioitinh);
+
+            int rowsAffected = insertCommand.ExecuteNonQuery();
+
+            if (rowsAffected > 0)
+            {
+                MessageBox.Show("Thêm khách hàng thành công.");
+                // Xóa dữ liệu đã nhập từ các ô giao diện
+                txt_id.Text = "";
+                txt_ten.Text = "";
+                txt_ngaysinh.Text = "";
+                txt_sdt.Text = "";
+                txt_diachi.Text = "";
+                nam.Checked = false;
+                nu.Checked = false;
+                // Cập nhật lại DataGridView sau khi thêm thành công
+                string refreshQuery = "SELECT * FROM khachhang1";
+                SqlCommand refreshCommand = new SqlCommand(refreshQuery, sqlcon);
+                SqlDataAdapter adapter = new SqlDataAdapter(refreshCommand);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+                dataGridView1.DataSource = dataTable;
+            }
+            else
+            {
+                MessageBox.Show("Thêm khách hàng thất bại.");
+            }
+        }
     }
 }
