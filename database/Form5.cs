@@ -21,5 +21,12 @@ namespace database
         {
 
         }
+
+        private void bt_them_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }
