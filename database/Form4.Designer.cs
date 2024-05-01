@@ -40,6 +40,7 @@ namespace database
             this.panel2 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
             this.bt_thoat = new System.Windows.Forms.Button();
             this.bt_tim = new System.Windows.Forms.Button();
             this.bt_xoa = new System.Windows.Forms.Button();
@@ -134,7 +135,7 @@ namespace database
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.panel2.Controls.Add(this.label7);
             this.panel2.Location = new System.Drawing.Point(12, 12);
             this.panel2.Name = "panel2";
@@ -154,6 +155,7 @@ namespace database
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.panel3.Controls.Add(this.button2);
             this.panel3.Controls.Add(this.bt_thoat);
             this.panel3.Controls.Add(this.bt_tim);
             this.panel3.Controls.Add(this.bt_xoa);
@@ -165,17 +167,33 @@ namespace database
             this.panel3.TabIndex = 3;
             this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
             // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
+            this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button2.Location = new System.Drawing.Point(576, 20);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(125, 50);
+            this.button2.TabIndex = 5;
+            this.button2.Text = "In PDF";
+            this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // bt_thoat
             // 
             this.bt_thoat.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.bt_thoat.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bt_thoat.Image = ((System.Drawing.Image)(resources.GetObject("bt_thoat.Image")));
             this.bt_thoat.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bt_thoat.Location = new System.Drawing.Point(686, 20);
+            this.bt_thoat.Location = new System.Drawing.Point(707, 20);
             this.bt_thoat.Name = "bt_thoat";
-            this.bt_thoat.Size = new System.Drawing.Size(146, 50);
+            this.bt_thoat.Size = new System.Drawing.Size(125, 50);
             this.bt_thoat.TabIndex = 4;
             this.bt_thoat.Text = "Thoát";
+            this.bt_thoat.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.bt_thoat.UseVisualStyleBackColor = false;
             this.bt_thoat.Click += new System.EventHandler(this.bt_thoat_Click);
             // 
@@ -185,11 +203,11 @@ namespace database
             this.bt_tim.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bt_tim.Image = ((System.Drawing.Image)(resources.GetObject("bt_tim.Image")));
             this.bt_tim.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bt_tim.Location = new System.Drawing.Point(524, 20);
+            this.bt_tim.Location = new System.Drawing.Point(433, 20);
             this.bt_tim.Name = "bt_tim";
-            this.bt_tim.Size = new System.Drawing.Size(146, 50);
+            this.bt_tim.Size = new System.Drawing.Size(125, 50);
             this.bt_tim.TabIndex = 3;
-            this.bt_tim.Text = "Tìm";
+            this.bt_tim.Text = "   Tìm";
             this.bt_tim.UseVisualStyleBackColor = false;
             this.bt_tim.Click += new System.EventHandler(this.bt_tim_Click);
             // 
@@ -199,11 +217,11 @@ namespace database
             this.bt_xoa.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bt_xoa.Image = ((System.Drawing.Image)(resources.GetObject("bt_xoa.Image")));
             this.bt_xoa.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bt_xoa.Location = new System.Drawing.Point(361, 20);
+            this.bt_xoa.Location = new System.Drawing.Point(286, 20);
             this.bt_xoa.Name = "bt_xoa";
-            this.bt_xoa.Size = new System.Drawing.Size(146, 50);
+            this.bt_xoa.Size = new System.Drawing.Size(125, 50);
             this.bt_xoa.TabIndex = 2;
-            this.bt_xoa.Text = "Xóa";
+            this.bt_xoa.Text = "    Xóa";
             this.bt_xoa.UseVisualStyleBackColor = false;
             this.bt_xoa.Click += new System.EventHandler(this.bt_xoa_Click);
             // 
@@ -213,11 +231,11 @@ namespace database
             this.bt_sua.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bt_sua.Image = ((System.Drawing.Image)(resources.GetObject("bt_sua.Image")));
             this.bt_sua.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bt_sua.Location = new System.Drawing.Point(195, 20);
+            this.bt_sua.Location = new System.Drawing.Point(150, 20);
             this.bt_sua.Name = "bt_sua";
-            this.bt_sua.Size = new System.Drawing.Size(146, 50);
+            this.bt_sua.Size = new System.Drawing.Size(125, 50);
             this.bt_sua.TabIndex = 1;
-            this.bt_sua.Text = "Sửa";
+            this.bt_sua.Text = "      Sửa";
             this.bt_sua.UseVisualStyleBackColor = false;
             this.bt_sua.Click += new System.EventHandler(this.bt_sua_Click);
             // 
@@ -227,11 +245,12 @@ namespace database
             this.bt_them.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bt_them.Image = ((System.Drawing.Image)(resources.GetObject("bt_them.Image")));
             this.bt_them.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.bt_them.Location = new System.Drawing.Point(28, 20);
+            this.bt_them.Location = new System.Drawing.Point(15, 20);
             this.bt_them.Name = "bt_them";
-            this.bt_them.Size = new System.Drawing.Size(146, 50);
+            this.bt_them.Size = new System.Drawing.Size(125, 50);
             this.bt_them.TabIndex = 0;
             this.bt_them.Text = "Thêm";
+            this.bt_them.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.bt_them.UseVisualStyleBackColor = false;
             this.bt_them.Click += new System.EventHandler(this.bt_them_Click);
             // 
@@ -382,5 +401,6 @@ namespace database
         private System.Windows.Forms.Button bt_xoa;
         private System.Windows.Forms.Button bt_sua;
         private System.Windows.Forms.Button bt_them;
+        private System.Windows.Forms.Button button2;
     }
 }

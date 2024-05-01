@@ -229,8 +229,7 @@ namespace database
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            var result = MessageBox.Show("Bạn có muốn thoát ứng dụng không?", "thông báo", MessageBoxButtons.YesNo);
-            if (result == DialogResult.Yes)
+            
             {
                 this.Close();
             }

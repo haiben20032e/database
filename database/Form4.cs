@@ -5,6 +5,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -396,6 +397,68 @@ namespace database
             {
                 this.Close();
             }
+        }
+
+        private void inds_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Pd_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            // Lấy chiều rộng và chiều cao của DataGridView
+            int width = dataGridView1.Width;
+            int height = dataGridView1.Height;
+
+            // Tạo một bitmap mới có kích thước của DataGridView
+            Bitmap bmp = new Bitmap(width, height);
+
+            // Vẽ DataGridView lên bitmap
+            dataGridView1.DrawToBitmap(bmp, new System.Drawing.Rectangle(0, 0, width, height));
+
+            // Vẽ bitmap lên trang in
+            e.Graphics.DrawImage(bmp, 0, 0);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // Kiểm tra xem DataGridView có dữ liệu không
+            if (dataGridView1.Rows.Count == 0)
+            {
+                MessageBox.Show("Không có dữ liệu để in.");
+                return;
+            }
+
+            // Tạo đối tượng PrintDocument
+            PrintDocument pd = new PrintDocument();
+
+            // Gắn sự kiện PrintPage
+            pd.PrintPage += new PrintPageEventHandler(pd_PrintPage);
+
+            // Mở hộp thoại in
+            PrintDialog printDialog = new PrintDialog();
+            printDialog.Document = pd;
+
+            // Nếu người dùng chọn OK trong hộp thoại in, thực hiện in
+            if (printDialog.ShowDialog() == DialogResult.OK)
+            {
+                pd.Print();
+            }
+        }
+        private void pd_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            // Lấy chiều rộng và chiều cao của DataGridView
+            int width = dataGridView1.Width;
+            int height = dataGridView1.Height;
+
+            // Tạo một bitmap mới có kích thước của DataGridView
+            Bitmap bmp = new Bitmap(width, height);
+
+            // Vẽ DataGridView lên bitmap
+            dataGridView1.DrawToBitmap(bmp, new System.Drawing.Rectangle(0, 0, width, height));
+
+            // Vẽ bitmap lên trang in
+            e.Graphics.DrawImage(bmp, 0, 0);
         }
     }
 }

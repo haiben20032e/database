@@ -31,7 +31,8 @@ namespace database
 
         private void button3_Click(object sender, EventArgs e)
         {
-            
+           frm5 frm = new frm5();
+            _ = frm.ShowDialog();
         }
 
         private void frm5_Load(object sender, EventArgs e)

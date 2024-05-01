@@ -77,7 +77,7 @@ namespace database
             // 
             // tim
             // 
-            this.tim.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.tim.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(103)))), ((int)(((byte)(198)))), ((int)(((byte)(227)))));
             this.tim.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tim.Image = global::database.Properties.Resources.search;
             this.tim.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -90,7 +90,7 @@ namespace database
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(86)))), ((int)(((byte)(255)))));
             this.panel1.Controls.Add(this.bt_them);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.txt_ngaysinh);
@@ -115,7 +115,7 @@ namespace database
             // 
             // bt_them
             // 
-            this.bt_them.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.bt_them.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(103)))), ((int)(((byte)(198)))), ((int)(((byte)(227)))));
             this.bt_them.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bt_them.Image = ((System.Drawing.Image)(resources.GetObject("bt_them.Image")));
             this.bt_them.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -129,7 +129,7 @@ namespace database
             // 
             // button1
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(103)))), ((int)(((byte)(198)))), ((int)(((byte)(227)))));
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.Image = global::database.Properties.Resources.exit;
             this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -246,7 +246,7 @@ namespace database
             // 
             // bt_xoa
             // 
-            this.bt_xoa.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.bt_xoa.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(103)))), ((int)(((byte)(198)))), ((int)(((byte)(227)))));
             this.bt_xoa.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bt_xoa.Image = global::database.Properties.Resources.delete_user;
             this.bt_xoa.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -260,7 +260,7 @@ namespace database
             // 
             // bt_update
             // 
-            this.bt_update.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.bt_update.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(103)))), ((int)(((byte)(198)))), ((int)(((byte)(227)))));
             this.bt_update.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bt_update.Image = global::database.Properties.Resources.transaction;
             this.bt_update.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -284,7 +284,7 @@ namespace database
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.Thistle;
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(140)))), ((int)(((byte)(231)))));
             this.panel2.Controls.Add(this.label6);
             this.panel2.Location = new System.Drawing.Point(32, 13);
             this.panel2.Name = "panel2";
@@ -305,7 +305,7 @@ namespace database
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(245)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(800, 623);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.textBox1);
