@@ -45,5 +45,11 @@ namespace database
             Hanghoa_frm4 frm = new Hanghoa_frm4();
             frm.ShowDialog();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            frm6 frm = new frm6();
+            _= frm.ShowDialog();
+        }
     }
 }

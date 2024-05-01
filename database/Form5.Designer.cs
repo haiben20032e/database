@@ -353,7 +353,7 @@ namespace database
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(12, 446);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(128, 16);
+            this.label1.Size = new System.Drawing.Size(127, 16);
             this.label1.TabIndex = 3;
             this.label1.Text = "Các phím chức năng\r\n";
             // 
@@ -362,11 +362,12 @@ namespace database
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.label2.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(252, 193);
+            this.label2.Location = new System.Drawing.Point(308, 191);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(414, 37);
+            this.label2.Size = new System.Drawing.Size(260, 37);
             this.label2.TabIndex = 4;
-            this.label2.Text = "Danh sách nhân viên cửa hàng";
+            this.label2.Text = "Quản lý nhân viên ";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label3
             // 

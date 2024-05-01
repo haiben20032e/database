@@ -155,9 +155,9 @@ namespace database
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(14, 134);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(45, 20);
+            this.label5.Size = new System.Drawing.Size(87, 20);
             this.label5.TabIndex = 40;
-            this.label5.Text = "birth";
+            this.label5.Text = "Ngày sinh";
             // 
             // txt_diachi
             // 
@@ -212,9 +212,9 @@ namespace database
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(14, 231);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(75, 20);
+            this.label4.Size = new System.Drawing.Size(64, 20);
             this.label4.TabIndex = 34;
-            this.label4.Text = "Address";
+            this.label4.Text = "Địa chỉ";
             // 
             // label3
             // 
@@ -222,9 +222,9 @@ namespace database
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(13, 177);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(60, 20);
+            this.label3.Size = new System.Drawing.Size(44, 20);
             this.label3.TabIndex = 33;
-            this.label3.Text = "Phone";
+            this.label3.Text = "SDT";
             // 
             // label2
             // 
@@ -232,9 +232,9 @@ namespace database
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(14, 80);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(59, 20);
+            this.label2.Size = new System.Drawing.Size(39, 20);
             this.label2.TabIndex = 32;
-            this.label2.Text = "NAME";
+            this.label2.Text = "Tên";
             // 
             // txt_id
             // 
@@ -254,7 +254,7 @@ namespace database
             this.bt_xoa.Name = "bt_xoa";
             this.bt_xoa.Size = new System.Drawing.Size(156, 50);
             this.bt_xoa.TabIndex = 42;
-            this.bt_xoa.Text = "XÓA";
+            this.bt_xoa.Text = "Xóa";
             this.bt_xoa.UseVisualStyleBackColor = false;
             this.bt_xoa.Click += new System.EventHandler(this.bt_xoa_Click_1);
             // 
@@ -268,7 +268,7 @@ namespace database
             this.bt_update.Name = "bt_update";
             this.bt_update.Size = new System.Drawing.Size(156, 50);
             this.bt_update.TabIndex = 29;
-            this.bt_update.Text = "   UPDATE";
+            this.bt_update.Text = "Sửa";
             this.bt_update.UseVisualStyleBackColor = false;
             this.bt_update.Click += new System.EventHandler(this.bt_update_Click_1);
             // 
@@ -278,9 +278,9 @@ namespace database
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(14, 21);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(105, 20);
+            this.label1.Size = new System.Drawing.Size(28, 20);
             this.label1.TabIndex = 27;
-            this.label1.Text = "CustomerID";
+            this.label1.Text = "ID";
             // 
             // panel2
             // 

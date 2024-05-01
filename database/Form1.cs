@@ -104,5 +104,10 @@ namespace database
         {
             // Không có xử lý
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

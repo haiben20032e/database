@@ -145,12 +145,12 @@ namespace database
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Consolas", 24F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(356, 23);
+            this.label7.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(279, 16);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(197, 37);
+            this.label7.Size = new System.Drawing.Size(250, 37);
             this.label7.TabIndex = 0;
-            this.label7.Text = "Quản lý xe";
+            this.label7.Text = "Quản lý sản phẩm";
             // 
             // panel3
             // 
