@@ -5,7 +5,9 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -23,198 +25,379 @@ namespace database
         {
 
             string connectionString = ConfigurationManager.ConnectionStrings["MyDBConnectionString"].ConnectionString;
-            // Khởi tạo kết nối
-            SqlConnection connection = new SqlConnection(connectionString);
 
-            // Mở kết nối
-            connection.Open();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
 
-            // Truy vấn dữ liệu từ bảng trong CSDL
-            string query = "SELECT * FROM nhapxuat";
-            SqlCommand command = new SqlCommand(query, connection);
+                string query = "SELECT p.idphieunhap, p.ngaynhap, p.idnhanvien, p.thue, c.idhanghoa, c.soluongnhap, c.gianhap " +
+                               "FROM pnhap p " +
+                               "INNER JOIN ctpnhap c ON p.idphieunhap = c.idphieunhap";
 
-            // Đọc dữ liệu vào DataTable
-            DataTable dataTable = new DataTable();
-            SqlDataAdapter adapter = new SqlDataAdapter(command);
-            adapter.Fill(dataTable);
+                SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
 
-            // Gán DataTable làm nguồn dữ liệu cho DataGridView
-            dataGridView1.DataSource = dataTable;
+                dataGridView1.DataSource = dataTable;
+            }
 
-            // Đóng kết nối sau khi sử dụng xong
-            connection.Close();
+        }
+        private void bt_thoat_Click(object sender, EventArgs e)
+        {
+            // Đóng form
+            this.Close();
         }
 
         private void bt_nhap_Click(object sender, EventArgs e)
         {
-            // Lấy thông tin từ các ô nhập liệu
-            string idhoadon = idphieu.Text.Trim();
-            string idhang = idhanghoa.Text.Trim();
-            string soluongg = sl.Text.Trim();
-            string ngaynhaphang = ngaynhap.Text.Trim();
-            string kieudonhang = kieudon.Text.Trim();
-
-            // Kiểm tra xem các ô nhập liệu có rỗng không
-            if (string.IsNullOrEmpty(idhoadon) || string.IsNullOrEmpty(idhang) || string.IsNullOrEmpty(soluongg) || string.IsNullOrEmpty(ngaynhaphang) || string.IsNullOrEmpty(kieudonhang))
+            // Kiểm tra xem các trường nhập liệu có rỗng không
+            if (string.IsNullOrWhiteSpace(idphieu.Text) ||
+                string.IsNullOrWhiteSpace(ngaynhap.Text) ||
+                string.IsNullOrWhiteSpace(nv.Text) ||
+                string.IsNullOrWhiteSpace(idhanghoa.Text) ||
+                string.IsNullOrWhiteSpace(dongia.Text) ||
+                string.IsNullOrWhiteSpace(sl.Text) ||
+                string.IsNullOrWhiteSpace(thue.Text))
             {
-                MessageBox.Show("Vui lòng điền đầy đủ thông tin.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin.");
                 return;
             }
 
-            // Kiểm tra xem số lượng nhập vào có phải là số không
-            if (!int.TryParse(soluongg, out int soluong))
-            {
-                MessageBox.Show("Số lượng nhập vào không hợp lệ. Vui lòng nhập số nguyên dương.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+            // Lấy dữ liệu từ các trường nhập
+            string idphieuu = idphieu.Text.Trim();
+            string ngaynhaphanghoa = ngaynhap.Text.Trim();
+            string manhanvien = nv.Text.Trim();
+            string idhanghoaa = idhanghoa.Text.Trim();
+            string gia = dongia.Text.Trim();
+            string soluongnhap = sl.Text.Trim();
+            string thuee = thue.Text.Trim();
 
-            // Kiểm tra xem id phiếu có trùng không
             string connectionString = ConfigurationManager.ConnectionStrings["MyDBConnectionString"].ConnectionString;
-            SqlConnection connection = new SqlConnection(connectionString);
-            string checkDuplicateQuery = "SELECT COUNT(*) FROM nhapxuat WHERE idhoadon = @idhoadon";
-            SqlCommand checkDuplicateCommand = new SqlCommand(checkDuplicateQuery, connection);
-            checkDuplicateCommand.Parameters.AddWithValue("@idhoadon", idhoadon);
 
-            try
+            // Khởi tạo kết nối
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
+                // Mở kết nối
                 connection.Open();
-                int duplicateCount = (int)checkDuplicateCommand.ExecuteScalar();
-                if (duplicateCount > 0)
+
+                // Bắt đầu một giao dịch
+                SqlTransaction transaction = connection.BeginTransaction();
+
+                try
                 {
-                    MessageBox.Show("ID phiếu đã tồn tại. Vui lòng chọn một ID phiếu khác.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    // Thêm dữ liệu vào bảng pnhap
+                    string insertPhieuNhapQuery = "INSERT INTO pnhap (idphieunhap, ngaynhap, idnhanvien, thue) VALUES (@idphieu, @ngaynhap, @manv, @thue)";
+                    SqlCommand insertPhieuNhapCommand = new SqlCommand(insertPhieuNhapQuery, connection, transaction);
+                    insertPhieuNhapCommand.Parameters.AddWithValue("@idphieu", idphieuu);
+                    insertPhieuNhapCommand.Parameters.AddWithValue("@ngaynhap", ngaynhaphanghoa);
+                    insertPhieuNhapCommand.Parameters.AddWithValue("@manv", manhanvien);
+                    insertPhieuNhapCommand.Parameters.AddWithValue("@thue", thuee);
+                    insertPhieuNhapCommand.ExecuteNonQuery();
+
+                    // Thêm dữ liệu vào bảng ctpnhap
+                    string insertChiTietPhieuNhapQuery = "INSERT INTO ctpnhap (idphieunhap, idhanghoa, soluongnhap, gianhap) VALUES (@idphieu, @idhanghoa, @soluongnhap, @gia)";
+                    SqlCommand insertChiTietPhieuNhapCommand = new SqlCommand(insertChiTietPhieuNhapQuery, connection, transaction);
+                    insertChiTietPhieuNhapCommand.Parameters.AddWithValue("@idphieu", idphieuu);
+                    insertChiTietPhieuNhapCommand.Parameters.AddWithValue("@idhanghoa", idhanghoaa);
+                    insertChiTietPhieuNhapCommand.Parameters.AddWithValue("@soluongnhap", soluongnhap);
+                    insertChiTietPhieuNhapCommand.Parameters.AddWithValue("@gia", gia);
+                    insertChiTietPhieuNhapCommand.ExecuteNonQuery();
+
+                    // Commit transaction nếu mọi thứ thành công
+                    transaction.Commit();
+                    MessageBox.Show("Nhập hàng thành công!");
+                    Form6_Load(sender, e);
+                }
+                catch (Exception ex)
+                {
+                    // Rollback transaction nếu có lỗi xảy ra
+                    transaction.Rollback();
+                    MessageBox.Show("Đã xảy ra lỗi: " + ex.Message);
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            finally
-            {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
-            }
-
-            // Tạo câu lệnh SQL INSERT cho bảng nhập xuất
-            string insertQuery = "INSERT INTO nhapxuat (idhoadon, idhanghoa, ngaynhapxuat, kieudon, soluong) VALUES (@idhoadon, @idhang, @ngaynhap, @kieudon, @soluong)";
-
-            // Tạo câu lệnh SQL UPDATE để cập nhật số lượng hàng hóa trong bảng hanghoa
-            string updateQuantityQuery = "UPDATE qlhanghoa SET sl = sl + @soluong WHERE id = @idhang";
-
-            try
-            {
-                connection.Open();
-
-                // Cập nhật số lượng hàng hóa trong bảng hanghoa
-                SqlCommand updateQuantityCommand = new SqlCommand(updateQuantityQuery, connection);
-                updateQuantityCommand.Parameters.AddWithValue("@idhang", idhang);
-                updateQuantityCommand.Parameters.AddWithValue("@soluong", soluong);
-                updateQuantityCommand.ExecuteNonQuery();
-
-                // Thêm mới phiếu nhập hàng vào bảng nhập xuất
-                SqlCommand insertCommand = new SqlCommand(insertQuery, connection);
-                insertCommand.Parameters.AddWithValue("@idhoadon", idhoadon);
-                insertCommand.Parameters.AddWithValue("@idhang", idhang);
-                insertCommand.Parameters.AddWithValue("@ngaynhap", ngaynhaphang);
-                insertCommand.Parameters.AddWithValue("@kieudon", kieudonhang);
-                insertCommand.Parameters.AddWithValue("@soluong", soluong);
-                insertCommand.ExecuteNonQuery();
-
-                MessageBox.Show("Nhập hàng thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // Tải lại dữ liệu từ cơ sở dữ liệu để cập nhật lên DataGridView (nếu cần)
-                string reloadQuery = "SELECT * FROM nhapxuat";
-                SqlDataAdapter adapter = new SqlDataAdapter(reloadQuery, connection);
-                DataTable dataTable = new DataTable();
-                adapter.Fill(dataTable);
-                dataGridView1.DataSource = dataTable;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
-            }
         }
 
-        private void label4_Click(object sender, EventArgs e)
-        {
 
-        }
 
-        private void idphieu_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void bt_them_Click(object sender, EventArgs e)
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }
 
         private void bt_xoa_Click(object sender, EventArgs e)
         {
-            // Kiểm tra xem có hàng nào được chọn trong DataGridView không
+            // Kiểm tra xem người dùng đã chọn dòng dữ liệu trong DataGridView chưa
             if (dataGridView1.SelectedRows.Count > 0)
             {
-                // Lấy ID hàng hóa từ hàng được chọn
-                string idhanghoa = dataGridView1.SelectedRows[0].Cells["id"].Value.ToString();
+                // Lấy ID phiếu nhập từ dòng được chọn
+                DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
+                string idphieuu = selectedRow.Cells["idphieunhap"].Value.ToString();
 
-                // Hiển thị MessageBox xác nhận xóa
-                DialogResult result = MessageBox.Show($"Bạn có chắc chắn muốn xóa hàng hóa có ID {idhanghoa}?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                // Hiển thị hộp thoại xác nhận
+                DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn xóa phiếu nhập này?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
                 {
-                    // Kết nối cơ sở dữ liệu
                     string connectionString = ConfigurationManager.ConnectionStrings["MyDBConnectionString"].ConnectionString;
+
+                    // Khởi tạo kết nối
                     using (SqlConnection connection = new SqlConnection(connectionString))
                     {
+                        // Mở kết nối
+                        connection.Open();
+
+                        // Bắt đầu một giao dịch
+                        SqlTransaction transaction = connection.BeginTransaction();
+
                         try
                         {
-                            connection.Open();
+                            // Xóa dữ liệu trong bảng ctpnhap
+                            string deleteChiTietPhieuNhapQuery = "DELETE FROM ctpnhap WHERE idphieunhap = @idphieu";
+                            SqlCommand deleteChiTietPhieuNhapCommand = new SqlCommand(deleteChiTietPhieuNhapQuery, connection, transaction);
+                            deleteChiTietPhieuNhapCommand.Parameters.AddWithValue("@idphieu", idphieuu);
+                            deleteChiTietPhieuNhapCommand.ExecuteNonQuery();
 
-                            // Tạo câu lệnh SQL để xóa hàng hóa
-                            string deleteQuery = "DELETE FROM qlhanghoa WHERE id = @idhanghoa";
-                            SqlCommand deleteCommand = new SqlCommand(deleteQuery, connection);
-                            deleteCommand.Parameters.AddWithValue("@idhanghoa", idhanghoa);
+                            // Xóa dữ liệu trong bảng pnhap
+                            string deletePhieuNhapQuery = "DELETE FROM pnhap WHERE idphieunhap = @idphieu";
+                            SqlCommand deletePhieuNhapCommand = new SqlCommand(deletePhieuNhapQuery, connection, transaction);
+                            deletePhieuNhapCommand.Parameters.AddWithValue("@idphieu", idphieuu);
+                            deletePhieuNhapCommand.ExecuteNonQuery();
 
-                            int rowsAffected = deleteCommand.ExecuteNonQuery();
+                            // Commit transaction nếu mọi thứ thành công
+                            transaction.Commit();
+                            MessageBox.Show("Xóa phiếu nhập thành công!");
 
-                            if (rowsAffected > 0)
-                            {
-                                MessageBox.Show($"Đã xóa hàng hóa có ID {idhanghoa} thành công.");
-                                // Refresh DataGridView sau khi xóa
-                                string refreshQuery = "SELECT * FROM qlhanghoa";
-                                SqlDataAdapter adapter = new SqlDataAdapter(refreshQuery, connection);
-                                DataTable dataTable = new DataTable();
-                                adapter.Fill(dataTable);
-                                dataGridView1.DataSource = dataTable;
-                            }
-                            else
-                            {
-                                MessageBox.Show("Xóa hàng hóa thất bại.");
-                            }
+                            // Refresh DataGridView
+                            Form6_Load(sender, e);
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            // Rollback transaction nếu có lỗi xảy ra
+                            transaction.Rollback();
+                            MessageBox.Show("Đã xảy ra lỗi: " + ex.Message);
                         }
                     }
                 }
             }
             else
             {
-                MessageBox.Show("Vui lòng chọn một hàng hóa trong bảng để xóa.");
+                MessageBox.Show("Vui lòng chọn một dòng dữ liệu để xóa.");
             }
         }
 
-        private void bt_xuat_Click(object sender, EventArgs e)
-        {
+        private void bt_them_Click(object sender, EventArgs e)
+        {  // Kiểm tra xem các trường nhập liệu có rỗng không
+            if (string.IsNullOrWhiteSpace(idphieu.Text) ||
+                string.IsNullOrWhiteSpace(ngaynhap.Text) ||
+                string.IsNullOrWhiteSpace(nv.Text) ||
+                string.IsNullOrWhiteSpace(idhanghoa.Text) ||
+                string.IsNullOrWhiteSpace(dongia.Text) ||
+                string.IsNullOrWhiteSpace(sl.Text) ||
+                string.IsNullOrWhiteSpace(thue.Text))
+            {
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin.");
+                return;
+            }
 
+            // Lấy dữ liệu từ các trường nhập
+            string idphieuu = idphieu.Text.Trim();
+            string ngaynhaphanghoa = ngaynhap.Text.Trim();
+            string manhanvien = nv.Text.Trim();
+            string idhanghoaa = idhanghoa.Text.Trim();
+            string gia = dongia.Text.Trim();
+            string soluongnhap = sl.Text.Trim();
+            string thuee = thue.Text.Trim();
+
+            string connectionString = ConfigurationManager.ConnectionStrings["MyDBConnectionString"].ConnectionString;
+
+            // Khởi tạo kết nối
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                // Mở kết nối
+                connection.Open();
+
+                // Bắt đầu một giao dịch
+                SqlTransaction transaction = connection.BeginTransaction();
+
+                try
+                {
+                    // Thêm dữ liệu vào bảng pnhap
+                    string insertPhieuNhapQuery = "INSERT INTO pnhap (idphieunhap, ngaynhap, idnhanvien, thue) VALUES (@idphieu, @ngaynhap, @manv, @thue)";
+                    SqlCommand insertPhieuNhapCommand = new SqlCommand(insertPhieuNhapQuery, connection, transaction);
+                    insertPhieuNhapCommand.Parameters.AddWithValue("@idphieu", idphieuu);
+                    insertPhieuNhapCommand.Parameters.AddWithValue("@ngaynhap", ngaynhaphanghoa);
+                    insertPhieuNhapCommand.Parameters.AddWithValue("@manv", manhanvien);
+                    insertPhieuNhapCommand.Parameters.AddWithValue("@thue", thuee);
+                    insertPhieuNhapCommand.ExecuteNonQuery();
+
+                    // Thêm dữ liệu vào bảng ctpnhap
+                    string insertChiTietPhieuNhapQuery = "INSERT INTO ctpnhap (idphieunhap, idhanghoa, soluongnhap, gianhap) VALUES (@idphieu, @idhanghoa, @soluongnhap, @gia)";
+                    SqlCommand insertChiTietPhieuNhapCommand = new SqlCommand(insertChiTietPhieuNhapQuery, connection, transaction);
+                    insertChiTietPhieuNhapCommand.Parameters.AddWithValue("@idphieu", idphieuu);
+                    insertChiTietPhieuNhapCommand.Parameters.AddWithValue("@idhanghoa", idhanghoaa);
+                    insertChiTietPhieuNhapCommand.Parameters.AddWithValue("@soluongnhap", soluongnhap);
+                    insertChiTietPhieuNhapCommand.Parameters.AddWithValue("@gia", gia);
+                    insertChiTietPhieuNhapCommand.ExecuteNonQuery();
+
+                    // Commit transaction nếu mọi thứ thành công
+                    transaction.Commit();
+                    MessageBox.Show("Nhập hàng thành công!");
+                    Form6_Load(sender, e);
+                }
+                catch (Exception ex)
+                {
+                    // Rollback transaction nếu có lỗi xảy ra
+                    transaction.Rollback();
+                    MessageBox.Show("Đã xảy ra lỗi: " + ex.Message);
+                }
+            }
+        }
+
+        private void bt_sua_Click(object sender, EventArgs e)
+        {
+            // Kiểm tra xem idphieu được nhập hay chưa
+            if (string.IsNullOrWhiteSpace(idphieu.Text))
+            {
+                MessageBox.Show("Vui lòng nhập ID phiếu.");
+                return;
+            }
+
+            string idphieuu = idphieu.Text.Trim();
+            bool hasUpdatePnhap = false;
+            bool hasUpdateCtpnhap = false;
+            string updatePnhapQuery = "UPDATE pnhap SET ";
+            string updateCtpnhapQuery = "UPDATE ctpnhap SET ";
+
+            // Kiểm tra và cập nhật thông tin cần thiết cho bảng pnhap
+            if (!string.IsNullOrWhiteSpace(ngaynhap.Text))
+            {
+                updatePnhapQuery += "ngaynhap = @ngaynhap, ";
+                hasUpdatePnhap = true;
+            }
+
+            if (!string.IsNullOrWhiteSpace(nv.Text))
+            {
+                updatePnhapQuery += "idnhanvien = @manv, ";
+                hasUpdatePnhap = true;
+            }
+
+            if (!string.IsNullOrWhiteSpace(thue.Text))
+            {
+                updatePnhapQuery += "thue = @thue, ";
+                hasUpdatePnhap = true;
+            }
+
+            // Kiểm tra và cập nhật thông tin cần thiết cho bảng ctpnhap
+            if (!string.IsNullOrWhiteSpace(idhanghoa.Text))
+            {
+                updateCtpnhapQuery += "idhanghoa = @idhanghoa, ";
+                hasUpdateCtpnhap = true;
+            }
+
+            if (!string.IsNullOrWhiteSpace(sl.Text))
+            {
+                updateCtpnhapQuery += "soluongnhap = @soluongnhap, ";
+                hasUpdateCtpnhap = true;
+            }
+
+            if (!string.IsNullOrWhiteSpace(dongia.Text))
+            {
+                updateCtpnhapQuery += "gianhap = @gia, ";
+                hasUpdateCtpnhap = true;
+            }
+
+            // Xóa dấu phẩy và khoảng trắng thừa
+            updatePnhapQuery = updatePnhapQuery.TrimEnd(',', ' ');
+            updateCtpnhapQuery = updateCtpnhapQuery.TrimEnd(',', ' ');
+
+            // Kiểm tra xem có cần cập nhật không
+            if (!hasUpdatePnhap && !hasUpdateCtpnhap)
+            {
+                MessageBox.Show("Không có thông tin nào được cập nhật.");
+                return;
+            }
+
+            updatePnhapQuery += " WHERE idphieunhap = @idphieu";
+            updateCtpnhapQuery += " WHERE idphieunhap = @idphieu";
+
+            string connectionString = ConfigurationManager.ConnectionStrings["MyDBConnectionString"].ConnectionString;
+
+            // Khởi tạo kết nối
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                // Mở kết nối
+                connection.Open();
+
+                // Bắt đầu một giao dịch
+                SqlTransaction transaction = connection.BeginTransaction();
+
+                try
+                {
+                    // Cập nhật dữ liệu trong bảng pnhap
+                    if (hasUpdatePnhap)
+                    {
+                        SqlCommand updatePhieuNhapCommand = new SqlCommand(updatePnhapQuery, connection, transaction);
+                        updatePhieuNhapCommand.Parameters.AddWithValue("@idphieu", idphieuu);
+                        if (!string.IsNullOrWhiteSpace(ngaynhap.Text))
+                            updatePhieuNhapCommand.Parameters.AddWithValue("@ngaynhap", ngaynhap.Text.Trim());
+                        if (!string.IsNullOrWhiteSpace(nv.Text))
+                            updatePhieuNhapCommand.Parameters.AddWithValue("@manv", nv.Text.Trim());
+                        if (!string.IsNullOrWhiteSpace(thue.Text))
+                            updatePhieuNhapCommand.Parameters.AddWithValue("@thue", thue.Text.Trim());
+                        updatePhieuNhapCommand.ExecuteNonQuery();
+                    }
+
+                    // Cập nhật dữ liệu trong bảng ctpnhap
+                    if (hasUpdateCtpnhap)
+                    {
+                        SqlCommand updateChiTietPhieuNhapCommand = new SqlCommand(updateCtpnhapQuery, connection, transaction);
+                        updateChiTietPhieuNhapCommand.Parameters.AddWithValue("@idphieu", idphieuu);
+                        if (!string.IsNullOrWhiteSpace(idhanghoa.Text))
+                            updateChiTietPhieuNhapCommand.Parameters.AddWithValue("@idhanghoa", idhanghoa.Text.Trim());
+                        if (!string.IsNullOrWhiteSpace(sl.Text))
+                            updateChiTietPhieuNhapCommand.Parameters.AddWithValue("@soluongnhap", sl.Text.Trim());
+                        if (!string.IsNullOrWhiteSpace(dongia.Text))
+                            updateChiTietPhieuNhapCommand.Parameters.AddWithValue("@gia", dongia.Text.Trim());
+                        updateChiTietPhieuNhapCommand.ExecuteNonQuery();
+                    }
+
+                    // Commit transaction nếu mọi thứ thành công
+                    transaction.Commit();
+                    MessageBox.Show("Cập nhật dữ liệu thành công!");
+
+                    // Refresh DataGridView
+                    Form6_Load(sender, e);
+                }
+                catch (Exception ex)
+                {
+                    // Rollback transaction nếu có lỗi xảy ra
+                    transaction.Rollback();
+                    MessageBox.Show("Đã xảy ra lỗi: " + ex.Message);
+                }
+            }
+        }
+
+        private void bt_in_Click(object sender, EventArgs e)
+        {
+            // Sử dụng PrintDocument để in nội dung DataGridView
+            PrintDocument printDoc = new PrintDocument();
+            printDoc.DocumentName = "Danh sách nhân viên";
+
+            // Sử dụng PrintPreviewDialog để xem trước trước khi in
+            PrintPreviewDialog previewDlg = new PrintPreviewDialog();
+            previewDlg.Document = printDoc;
+
+            // Tạo sự kiện in
+            printDoc.PrintPage += (s, ev) =>
+            {
+                // Vẽ DataGridView
+                Bitmap bm = new Bitmap(this.dataGridView1.Width, this.dataGridView1.Height);
+                this.dataGridView1.DrawToBitmap(bm, new Rectangle(0, 0, this.dataGridView1.Width, this.dataGridView1.Height));
+                ev.Graphics.DrawImage(bm, 0, 0);
+            };
+
+            // Hiển thị trước khi in
+            previewDlg.ShowDialog();
         }
     }
 }

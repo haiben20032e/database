@@ -51,5 +51,11 @@ namespace database
             frm6 frm = new frm6();
             _= frm.ShowDialog();
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            frm7 frm = new frm7();
+            _ = frm.ShowDialog();
+        }
     }
 }

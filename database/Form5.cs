@@ -118,7 +118,7 @@ namespace database
             }
 
             // Check for duplicate employee ID
-            string checkQuery = "SELECT COUNT(*) FROM nhanvien WHERE id = @idnhanvien";
+            string checkQuery = "SELECT COUNT(*) FROM nhanvien WHERE idnhanvien = @idnhanvien";
             SqlCommand checkCommand = new SqlCommand(checkQuery, sqlcon);
             checkCommand.Parameters.AddWithValue("@idnhanvien", idnhanvien);
             int existingCount = (int)checkCommand.ExecuteScalar();
@@ -130,7 +130,7 @@ namespace database
             }
 
             // Add new employee to the database
-            string insertQuery = "INSERT INTO nhanvien (id, ten, namsinh, sdt, chucvu, luong, diachi, gioitinh) " +
+            string insertQuery = "INSERT INTO nhanvien (idnhanvien, ten, namsinh, sdt, chucvu, luong, diachi, gioitinh) " +
                                  "VALUES (@idnhanvien, @tennv, @namsinh, @sodt, @chucvu, @luong, @diachi, @gioitinh)";
             SqlCommand insertCommand = new SqlCommand(insertQuery, sqlcon);
             insertCommand.Parameters.AddWithValue("@idnhanvien", idnhanvien);
@@ -214,7 +214,7 @@ namespace database
             string idnhanvien = txt_id.Text;
 
             // Kiểm tra sự tồn tại của ID nhân viên trong cơ sở dữ liệu
-            string queryCheckExist = "SELECT COUNT(*) FROM nhanvien WHERE id = @idnhanvien";
+            string queryCheckExist = "SELECT COUNT(*) FROM nhanvien WHERE idnhanvien = @idnhanvien";
             SqlCommand cmdCheckExist = new SqlCommand(queryCheckExist, sqlcon);
             cmdCheckExist.Parameters.AddWithValue("@idnhanvien", idnhanvien);
             int count = (int)cmdCheckExist.ExecuteScalar();
@@ -271,7 +271,7 @@ namespace database
             if (hasUpdate)
             {
                 // Loại bỏ dấu phẩy cuối cùng và thêm điều kiện WHERE vào câu lệnh UPDATE
-                query = query.TrimEnd(' ', ',') + " WHERE id = @idnhanvien";
+                query = query.TrimEnd(' ', ',') + " WHERE idnhanvien = @idnhanvien";
 
                 SqlCommand sqlcmd = new SqlCommand(query, sqlcon);
                 sqlcmd.Parameters.AddWithValue("@idnhanvien", idnhanvien);
@@ -334,7 +334,7 @@ namespace database
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 // Lấy ID nhân viên từ hàng được chọn
-                string idnhanvien = dataGridView1.SelectedRows[0].Cells["id"].Value.ToString();
+                string idnhanvien = dataGridView1.SelectedRows[0].Cells["idnhanvien"].Value.ToString();
 
                 // Hiển thị MessageBox xác nhận xóa
                 DialogResult result = MessageBox.Show($"Bạn có chắc chắn muốn xóa nhân viên có ID {idnhanvien}?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -354,7 +354,7 @@ namespace database
                     }
 
                     // Tạo câu lệnh SQL để xóa nhân viên
-                    string deleteQuery = "DELETE FROM nhanvien WHERE id = @idnhanvien";
+                    string deleteQuery = "DELETE FROM nhanvien WHERE idnhanvien = @idnhanvien";
                     SqlCommand deleteCommand = new SqlCommand(deleteQuery, sqlcon);
                     deleteCommand.Parameters.AddWithValue("@idnhanvien", idnhanvien);
 
@@ -396,7 +396,7 @@ namespace database
             }
 
             // Khởi tạo câu lệnh SQL tìm kiếm
-            string searchQuery = "SELECT * FROM nhanvien WHERE id LIKE @keyword OR ten LIKE @keyword OR chucvu LIKE @keyword OR diachi LIKE @keyword";
+            string searchQuery = "SELECT * FROM nhanvien WHERE idnhanvien LIKE @keyword OR ten LIKE @keyword OR chucvu LIKE @keyword OR diachi LIKE @keyword";
 
             // Mở kết nối nếu cần
             if (sqlcon == null)

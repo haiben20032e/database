@@ -99,7 +99,7 @@ namespace database
             }
 
             // Check for duplicate product ID
-            string checkQuery = "SELECT COUNT(*) FROM qlhanghoa WHERE id = @idsanpham";
+            string checkQuery = "SELECT COUNT(*) FROM qlhanghoa WHERE idhanghoa = @idsanpham";
             SqlCommand checkCommand = new SqlCommand(checkQuery, sqlcon);
             checkCommand.Parameters.AddWithValue("@idsanpham", idsanpham);
             int existingCount = (int)checkCommand.ExecuteScalar();
@@ -111,7 +111,7 @@ namespace database
             }
 
             // Add new product to the database
-            string insertQuery = "INSERT INTO qlhanghoa (id, hang, tensp, sl, bh, mt) " +
+            string insertQuery = "INSERT INTO qlhanghoa (idhanghoa, hang, tensp, sl, bh, mt) " +
                                  "VALUES (@idsanpham, @hang, @sanpham, @soluong, @baohanh, @mota)";
             SqlCommand insertCommand = new SqlCommand(insertQuery, sqlcon);
             insertCommand.Parameters.AddWithValue("@idsanpham", idsanpham);
@@ -155,7 +155,7 @@ namespace database
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 // Lấy ID sản phẩm từ hàng được chọn
-                string idsanpham = dataGridView1.SelectedRows[0].Cells["id"].Value.ToString();
+                string idsanpham = dataGridView1.SelectedRows[0].Cells["idhanghoa"].Value.ToString();
 
                 // Hiển thị MessageBox xác nhận xóa
                 DialogResult result = MessageBox.Show($"Bạn có chắc chắn muốn xóa sản phẩm có ID {idsanpham}?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -175,7 +175,7 @@ namespace database
                     }
 
                     // Tạo câu lệnh SQL để xóa sản phẩm
-                    string deleteQuery = "DELETE FROM qlhanghoa WHERE id = @idsanpham";
+                    string deleteQuery = "DELETE FROM qlhanghoa WHERE idhanghoa = @idsanpham";
                     SqlCommand deleteCommand = new SqlCommand(deleteQuery, sqlcon);
                     deleteCommand.Parameters.AddWithValue("@idsanpham", idsanpham);
 
@@ -240,7 +240,7 @@ namespace database
             string idsanpham = txt_id.Text;
 
             // Kiểm tra sự tồn tại của ID sản phẩm trong cơ sở dữ liệu
-            string queryCheckExist = "SELECT COUNT(*) FROM qlhanghoa WHERE id = @idsanpham";
+            string queryCheckExist = "SELECT COUNT(*) FROM qlhanghoa WHERE idhanghoa = @idsanpham";
             SqlCommand cmdCheckExist = new SqlCommand(queryCheckExist, sqlcon);
             cmdCheckExist.Parameters.AddWithValue("@idsanpham", idsanpham);
             int count = (int)cmdCheckExist.ExecuteScalar();
@@ -289,7 +289,7 @@ namespace database
             if (hasUpdate)
             {
                 // Loại bỏ dấu phẩy cuối cùng và thêm điều kiện WHERE vào câu lệnh UPDATE
-                query = query.TrimEnd(' ', ',') + " WHERE id = @idsanpham";
+                query = query.TrimEnd(' ', ',') + " WHERE idhanghoa = @idsanpham";
 
                 SqlCommand sqlcmd = new SqlCommand(query, sqlcon);
                 sqlcmd.Parameters.AddWithValue("@idsanpham", idsanpham);
@@ -369,7 +369,7 @@ namespace database
             }
 
             // Tạo câu lệnh SQL để tìm kiếm dữ liệu
-            string searchQuery = "SELECT * FROM qlhanghoa WHERE id = @id";
+            string searchQuery = "SELECT * FROM qlhanghoa WHERE idhanghoa = @id";
             SqlCommand searchCommand = new SqlCommand(searchQuery, sqlcon);
             searchCommand.Parameters.AddWithValue("@id", id);
 

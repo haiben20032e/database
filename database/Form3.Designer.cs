@@ -36,13 +36,14 @@ namespace database
             this.button4 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.button5 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
             // 
             this.button1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(410, 140);
+            this.button1.Location = new System.Drawing.Point(264, 168);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(179, 63);
             this.button1.TabIndex = 0;
@@ -54,7 +55,7 @@ namespace database
             // 
             this.button2.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(89, 140);
+            this.button2.Location = new System.Drawing.Point(491, 85);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(179, 63);
             this.button2.TabIndex = 1;
@@ -68,7 +69,7 @@ namespace database
             this.button3.DialogResult = System.Windows.Forms.DialogResult.Abort;
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button3.Location = new System.Drawing.Point(89, 237);
+            this.button3.Location = new System.Drawing.Point(34, 85);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(179, 63);
             this.button3.TabIndex = 2;
@@ -80,11 +81,11 @@ namespace database
             // 
             this.button4.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Location = new System.Drawing.Point(410, 237);
+            this.button4.Location = new System.Drawing.Point(44, 262);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(179, 63);
             this.button4.TabIndex = 3;
-            this.button4.Text = "Nhập xuất";
+            this.button4.Text = "Nhập hàng";
             this.button4.UseVisualStyleBackColor = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
@@ -108,6 +109,18 @@ namespace database
             this.label2.TabIndex = 5;
             this.label2.Text = "Quản lý hệ thống";
             // 
+            // button5
+            // 
+            this.button5.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button5.Location = new System.Drawing.Point(491, 253);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(179, 63);
+            this.button5.TabIndex = 6;
+            this.button5.Text = "xuất hàng";
+            this.button5.UseVisualStyleBackColor = false;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
             // frm3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -115,6 +128,7 @@ namespace database
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(692, 385);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button4);
@@ -137,5 +151,6 @@ namespace database
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button button5;
     }
 }

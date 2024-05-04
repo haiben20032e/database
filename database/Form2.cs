@@ -65,7 +65,7 @@ namespace database
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 // Lấy ID khách hàng từ hàng được chọn
-                string idkhachhang = dataGridView1.SelectedRows[0].Cells["id"].Value.ToString();
+                string idkhachhang = dataGridView1.SelectedRows[0].Cells["idkhachhang"].Value.ToString();
 
                 // Hiển thị MessageBox xác nhận xóa
                 DialogResult result = MessageBox.Show($"Bạn có chắc chắn muốn xóa khách hàng có ID {idkhachhang}?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -85,7 +85,7 @@ namespace database
                     }
 
                     // Tạo câu lệnh SQL để xóa khách hàng
-                    string deleteQuery = "DELETE FROM khachhang1 WHERE id = @idkhachhang";
+                    string deleteQuery = "DELETE FROM khachhang1 WHERE idkhachhang = @idkhachhang";
                     SqlCommand deleteCommand = new SqlCommand(deleteQuery, sqlcon);
                     deleteCommand.Parameters.AddWithValue("@idkhachhang", idkhachhang);
 
@@ -139,7 +139,7 @@ namespace database
             string idkhachhang = txt_id.Text;
 
             // Tạo câu lệnh SQL SELECT để kiểm tra xem ID khách hàng tồn tại hay không
-            string queryCheckExist = "SELECT COUNT(*) FROM khachhang1 WHERE id = @idkhachhang";
+            string queryCheckExist = "SELECT COUNT(*) FROM khachhang1 WHERE idkhachhang = @idkhachhang";
             SqlCommand cmdCheckExist = new SqlCommand(queryCheckExist, sqlcon);
             cmdCheckExist.Parameters.AddWithValue("@idkhachhang", idkhachhang);
             int count = (int)cmdCheckExist.ExecuteScalar();
@@ -185,7 +185,7 @@ namespace database
             if (hasUpdate)
             {
                 // Loại bỏ dấu phẩy cuối cùng và thêm điều kiện WHERE vào câu lệnh UPDATE
-                query = query.TrimEnd(' ', ',') + " WHERE id = @idkhachhang";
+                query = query.TrimEnd(' ', ',') + " WHERE idkhachhang = @idkhachhang";
 
                 SqlCommand sqlcmd = new SqlCommand(query, sqlcon);
                 sqlcmd.Parameters.AddWithValue("@idkhachhang", idkhachhang);
@@ -289,7 +289,7 @@ namespace database
             }
 
             // Kiểm tra ID khách hàng trùng lặp
-            string checkQuery = "SELECT COUNT(*) FROM khachhang1 WHERE id = @idkhachhang";
+            string checkQuery = "SELECT COUNT(*) FROM khachhang1 WHERE idkhachhang = @idkhachhang";
             SqlCommand checkCommand = new SqlCommand(checkQuery, sqlcon);
             checkCommand.Parameters.AddWithValue("@idkhachhang", idkhachhang);
             int existingCount = (int)checkCommand.ExecuteScalar();
@@ -301,7 +301,7 @@ namespace database
             }
 
             // Thêm mới khách hàng vào cơ sở dữ liệu
-            string insertQuery = "INSERT INTO khachhang1 (id,tenkh,ngaysinh,sdt, diachi, gioitinh) " +
+            string insertQuery = "INSERT INTO khachhang1 (idkhachhang,tenkh,ngaysinh,sdt, diachi, gioitinh) " +
                                  "VALUES (@idkhachhang, @hoten, @ngaysinh, @phone, @diachi, @gioitinh)";
             SqlCommand insertCommand = new SqlCommand(insertQuery, sqlcon);
             insertCommand.Parameters.AddWithValue("@idkhachhang", idkhachhang);
